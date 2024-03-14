@@ -1,9 +1,12 @@
 package model.user;
 
-public abstract class User extends GuestUser{
+import model.user.GuestUser;
+import service.IPostService;
+
+public abstract class User extends GuestUser implements IPostService {
     private String username;
     private String password;
-    private String nameAndSurnameOrTitle;
+    protected String nameAndSurnameOrTitle;
 
     public User() {
         super();
@@ -19,7 +22,7 @@ public abstract class User extends GuestUser{
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername() {
         this.username = nameAndSurnameOrTitle+"_"+getUserID();
     }
 
