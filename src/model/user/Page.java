@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class Page {
     private String title;
     private String description;
-    private ArrayList<User> followers;
-    private ArrayList<Post> postsInPage;
+    private ArrayList<User> followers = new ArrayList<User>();
+    private ArrayList<Post> postsInPage = new ArrayList<Post>();
 
     public Page() {
         setTitle("Mākas");

@@ -3,6 +3,8 @@ package model.user;
 import model.user.GuestUser;
 import service.IPostService;
 
+import java.security.MessageDigest;
+
 public abstract class User extends GuestUser implements IPostService {
     private String username;
     private String password;
@@ -23,7 +25,7 @@ public abstract class User extends GuestUser implements IPostService {
     }
 
     public void setUsername() {
-        this.username = nameAndSurnameOrTitle+"_"+getUserID();
+        this.username = nameAndSurnameOrTitle.toLowerCase().replace(" ", "")+"_"+getUserID();
     }
 
     public String getPassword() {
@@ -32,7 +34,13 @@ public abstract class User extends GuestUser implements IPostService {
 
     public void setPassword(String password){
         if (password!=null && password.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"))
-            this.password = username;
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(password.getBytes());
+                this.password = new String(md.digest());
+            } catch (Exception e) {
+                this.password = "--------";
+            }
         else
             this.password = "shit pass";
     }
@@ -52,6 +60,6 @@ public abstract class User extends GuestUser implements IPostService {
 
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() + ":" + nameAndSurnameOrTitle + " (" + username +") ";
     }
 }

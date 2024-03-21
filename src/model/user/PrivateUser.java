@@ -44,7 +44,7 @@ public class PrivateUser extends User {
     }
 
     @Override
-    public void publishPost(PostType type, String msg) throws Exception {
+    public Post publishPost(PostType type, String msg) throws Exception {
         if (type == null || msg == null){
             throw new Exception("Invalid post type or msg");
         }
@@ -55,6 +55,7 @@ public class PrivateUser extends User {
         } else if (type.equals(PostType.publicPost)){
             publicPosts.add(post);
         }
+        return post;
     }
 
     public void followPrivateUser(User user) throws Exception{
@@ -71,6 +72,6 @@ public class PrivateUser extends User {
 
     @Override
     public String toString() {
-        return super.toString() + super.getNameAndSurnameOrTitle() + "(" + getUsername() + ")";
+        return super.toString() + " (" +(privatePosts.size() + publicPosts.size() + " posts)");
     }
 }
